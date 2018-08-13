@@ -1,13 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <button @click="test">点击</button>
-    <router-view/>
+  <ul>
+    <li v-for="(item,index) in this.type" :key="index">{{item}}</li>
+  </ul>
+     <div>{{this.token}}</div>
+      <button @click="updateToken">测试token</button>
+      <button @click="setArticleType('js')">测试子模块</button>
   </div>
+  
 </template>
 
 <script>
 import request from 'utils/request' 
+import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 export default {
   name: 'App',
   methods:{
@@ -18,6 +24,26 @@ export default {
     }
     const data = await request.get('123',params);
     console.log(data);
+    },
+    ...mapActions([
+      'updateToken'
+    ]),
+    // updateType(){
+    //   this.$store.commit('articleType/setArticleType','js')
+    // },
+    ...mapMutations('articleType',[
+      "setArticleType"
+    ])
+  },
+  computed:{
+    ...mapState('articleType',[
+      "type"
+    ]),
+    ...mapState([
+      'token'
+    ]),
+    count(){
+      return this.$store.state.articleType.type[0]
     }
   }
 }

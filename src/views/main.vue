@@ -1,6 +1,6 @@
 <template>
   <div>
-<el-container style="height: 920px; border: 1px solid #eee">
+<el-container :style="'height:'+ height+'px; border: 1px solid #eee'">
 
   <Nav></Nav>
   <el-container>
@@ -37,6 +37,11 @@ import Nav from '@/components/nav'
 export default {
   components:{
       Nav
+  },
+  data(){
+    return{
+      height:window.innerHeight
+    }
   },
   methods:{
    async  test(){
@@ -80,5 +85,8 @@ export default {
   
   .el-aside {
     color: #333;
+  }
+  .main{
+    height: 100%;
   }
 </style>

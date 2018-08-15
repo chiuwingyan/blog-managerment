@@ -10,7 +10,7 @@ import articleType from './modules/article-type'
 Vue.use(Vuex)
 
 let state = {
-    token:'123456'
+    token: localStorage.getItem('token')
 }
 
 export default new Vuex.Store({

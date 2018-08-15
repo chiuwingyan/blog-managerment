@@ -31,11 +31,11 @@
 import {routerList} from '@/router/index'
 export default {
 mounted(){
-    console.log(routerList)
+   
 },
  data() {
  return {
-     router:routerList[1].children
+     router:routerList[2].children
  }
  },
  components: {

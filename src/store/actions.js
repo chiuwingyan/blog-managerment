@@ -1,7 +1,7 @@
 export default {
     updateToken ({commit,newVal}){
         setTimeout(() => {
-            commit("setToken",666)
+            commit("setToken",newVal)
         }, 1000);
     }
 }

@@ -9,7 +9,7 @@
 import request from 'utils/request' 
 export default {
   mounted(){
-    console.log($vm)
+   // console.log($vm)
   },
   data(){
     return {
@@ -42,6 +42,6 @@ export default {
 <style lang="scss" scoped="" type="text/scss">
 .v-note-wrapper{
   width: 100% !important;
-  height: 800px !important;
+  height: 600px !important;
 }
 </style>

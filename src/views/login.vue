@@ -1,0 +1,40 @@
+<template>
+  <div class="login">
+      <h1>my blog admin</h1>
+      用户名：<el-input v-model="username" placeholder="请输入用户名"></el-input><br />
+      密码：<el-input v-model="pwd" placeholder="请输入密码"></el-input>
+        <el-button type="primary" @click="login">登录</el-button>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+import request from 'utils/request'
+import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
+export default {
+  data() {
+    return {
+        username:'',
+        pwd:''
+    }
+  },
+  components: {
+
+  },
+  methods:{
+    async login(){
+        const params = {
+            password:this.pwd,
+            username:this.username
+        };
+        const resp = await request.post('auth/login',params);
+        console.log('resp',resp)
+        localStorage.setItem('token',`Bearer ${resp.data.token}`);
+        this.$router.push('/main');
+        this.$store.commit('setToken',localStorage.getItem('token'))
+      }
+  }
+}
+</script>
+
+<style scoped lang="scss" ype="text/scss" >
+</style>

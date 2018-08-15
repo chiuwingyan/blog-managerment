@@ -7,35 +7,46 @@ const middle = () => import('@/views/middle')
 import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: '/main'
-    },
-    {
-      path: '/main',
-      component: main,
-      redirect: '/main/home',
-      children:[
-        {
-          path:'home',
-          component:home,
-          name:'首页'
+
+export const routerList = [
+  {
+    path: '/',
+    redirect: '/main'
+  },
+  {
+    path: '/main',
+    component: main,
+    redirect: '/main/home',
+    children: [{
+        path: 'home',
+        component: home,
+        meta:{
+          name: '首页',
         },
-        {
-          path: 'article',
+        icon: 'el-icon-menu',
+      },
+      {
+        path: 'article',
+        meta:{
           name: '文章管理',
-    
-          children: [
-            {
-              path: 'addActicle',
-              component: addActicle ,
-              name: '新增文章'
-            }
-          ]
-        }
+        },
+        component: middle,
+        icon: 'el-icon-menu',
+        children: [
+          {
+          path: 'addActicle',
+          component: addActicle,
+          meta:{
+            name: '新增文章',
+          },
+          icon: 'el-icon-menu',
+        },
       ]
-    },
-  ]
+      }
+    ]
+  },
+]
+
+export default new Router({
+  routes: routerList
 })

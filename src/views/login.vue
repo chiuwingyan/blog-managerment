@@ -29,7 +29,7 @@ export default {
         const resp = await request.post('auth/login',params);
         console.log('resp',resp)
         this.$store.commit('setToken',`Bearer ${resp.data.token}`);
-        this.$store.commit('setUsername',resp.data.nickname);
+        this.$store.commit('setUsername',resp.data.nickName);
         this.$router.push('/main');
       }
   }

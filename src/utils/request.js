@@ -2,8 +2,8 @@ import axios from 'axios'
 import { resolve } from 'url';
 import store from '@/store'
 
-axios.defaults.timeout = 5000;       
-axios.defaults.baseURL = 'http://192.168.1.4:8181/';
+axios.defaults.timeout = 10000;       
+axios.defaults.baseURL = 'http://39.108.174.244:8181/';
 axios.defaults.headers = {
     'X-Requested-With': 'XMLHttpRequest'
 }

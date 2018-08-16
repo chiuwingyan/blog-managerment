@@ -17,10 +17,10 @@
     <el-table-column
       fixed="right"
       label="操作"
-      width="380">
+      width="480">
       <template slot-scope="scope">
         <el-button @click="update(scope.row.id,scope.row.categoryName)" type="text" size="small">修改</el-button>
-        <el-button type="text" size="small" @click="delete(scope.row.id)">删除</el-button>
+        <el-button type="text" size="small" @click="deleted(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -51,7 +51,8 @@ export default {
       update(id,name){
           console.log(id,name)
       },
-      delete(id){
+      deleted(id){
+         console.log(id)
         this.$confirm('确定要删除该分类?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

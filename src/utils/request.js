@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { resolve } from 'url';
-
+import store from '@/store'
 
 axios.defaults.timeout = 5000;       
 axios.defaults.baseURL = 'http://192.168.1.4:8181/';
@@ -9,8 +9,8 @@ axios.defaults.headers = {
 }
 //发送请求前的拦截器
 axios.interceptors.request.use(function(config){
-    if(localStorage.getItem('token') && localStorage.getItem('token') !== null){
-        config.headers['Authorization']= localStorage.getItem('token');
+    if (store.state.token && store.state.token !== null){
+        config.headers['Authorization'] = store.state.token;
     }
     return config;
 },function(error){

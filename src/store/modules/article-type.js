@@ -1,4 +1,3 @@
-import { SET_ARTICLE_TYPE } from './../mutation-type'
 
 export default {
     namespaced:true,
@@ -6,7 +5,7 @@ export default {
         type:['css']
     },
     mutations:{
-        [SET_ARTICLE_TYPE](state,newVal){
+        setArticleType(state,newVal){
             state.type.push(newVal);
         }
     }

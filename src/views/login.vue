@@ -28,9 +28,9 @@ export default {
         };
         const resp = await request.post('auth/login',params);
         console.log('resp',resp)
-        localStorage.setItem('token',`Bearer ${resp.data.token}`);
+        this.$store.commit('setToken',`Bearer ${resp.data.token}`);
+        this.$store.commit('setUsername',resp.data.nickname);
         this.$router.push('/main');
-        this.$store.commit('setToken',localStorage.getItem('token'))
       }
   }
 }

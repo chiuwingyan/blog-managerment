@@ -1,5 +1,8 @@
 export default {
-    user_name(state){
+    getUserName(state){
         return `abc ${state.token}`
+    },
+    gerToken(state){
+        
     }
 }

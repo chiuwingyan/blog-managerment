@@ -10,6 +10,12 @@ import request from 'utils/request'
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 export default {
   name: 'App',
+  created(){
+    let token = localStorage.getItem('token'),
+        username = localStorage.getItem('username');
+        this.$store.commit('setToken',token);
+        this.$store.commit('setUsername',username);
+  },
   methods:{
    async  test(){
       const params = {

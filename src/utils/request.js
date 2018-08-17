@@ -4,8 +4,8 @@ import store from '@/store'
 import {Message} from 'element-ui';
 
 axios.defaults.timeout = 10000;
-axios.defaults.baseURL = 'http://localhost:8181/';
-// axios.defaults.baseURL = 'http://39.108.174.244:8181/';
+//axios.defaults.baseURL = 'http://localhost:8181/';
+axios.defaults.baseURL = 'http://39.108.174.244:8181/';
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
 }

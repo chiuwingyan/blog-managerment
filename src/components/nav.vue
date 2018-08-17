@@ -7,20 +7,23 @@
     active-text-color="#BAA645" router>
 
     <template v-for="item in router">
-        <el-submenu index="" v-if="item.children && item.children.length>0" :key="item.meta.name"> 
+        <el-submenu index="" v-if="item.meta.isShow && item.children && item.children.length>0" :key="item.meta.name"> 
           <template slot="title">
           <i :class="item.icon"></i>
             <span slot="title">{{item.meta.name}}</span>
           </template>
-          <el-menu-item :index="'/main/'+item.path+'/'+v.path" v-for="(v,index) in item.children" :key="index">
+          <el-menu-item :index="'/main/'+item.path+'/'+v.path" v-for="(v,index) in item.children" :key="index" v-if="v.meta.isShow">
           <i :class="v.icon"></i>
           <span slot="title">{{v.meta.name}}</span>
           </el-menu-item>
         </el-submenu>
-        <el-menu-item :index="'/main/'+item.path" v-else :key="item.meta.name">
+        <el-menu-item :index="'/main/'+item.path" v-else-if="item.meta.isShow" :key="item.meta.name">
         <i class="el-icon-menu"></i>
         <span slot="title">{{item.meta.name}}</span>
         </el-menu-item>
+        <el-menu-item v-else :key="item.meta.name" v-show="false">
+        </el-menu-item>
+        
     </template>
 
     </el-menu>

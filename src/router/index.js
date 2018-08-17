@@ -4,7 +4,8 @@ import login from "@/views/login";
 const main = () => import('@/views/main')
 const home = () => import('@/views/home')
 const addActicle = () => import('@/views/article/add-article')
-const category = () => import('@/views/article/category')
+const category = () => import('@/views/category/category')
+const tag = () => import('@/views/tag/tag')
 const middle = () => import('@/views/middle')
 Vue.use(Router)
 
@@ -45,16 +46,24 @@ export const routerList = [
             name: '新增文章',
           },
           icon: 'el-icon-menu',
-        },
-          {
-            path: 'category',
-            component: category,
-            meta: {
-              name: '文章分类',
-            },
-            icon: 'el-icon-menu',
-          },
+        }
       ]
+      },
+      {
+        path: 'category',
+        component: category,
+        meta: {
+          name: '文章分类',
+        },
+        icon: 'el-icon-menu',
+      },
+      {
+        path: 'tag',
+        component: tag,
+        meta: {
+          name: '文章标签',
+        },
+        icon: 'el-icon-menu',
       }
     ]
   },

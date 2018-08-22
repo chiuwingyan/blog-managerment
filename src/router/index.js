@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from "@/views/login";
+import login from "@/views/common/login";
+
 const main = () => import('@/views/main')
 const home = () => import('@/views/home')
 const addActicle = () => import('@/views/article/add-article')
@@ -19,25 +20,26 @@ export const routerList = [
     redirect: '/login'
   },
   {
-    path:'/login',
-    component:login
+    name: 'login',
+    path: '/login',
+    component: login
   },
   {
     path: '/main',
     component: main,
     redirect: '/main/home',
     children: [{
-        path: 'home',
-        component: home,
-        meta:{
-          name: '首页',
-          isShow: true
-        },
-        icon: 'el-icon-menu',
+      path: 'home',
+      component: home,
+      meta: {
+        name: '首页',
+        isShow: true
       },
+      icon: 'el-icon-menu',
+    },
       {
         path: 'article',
-        meta:{
+        meta: {
           name: '文章管理',
           isShow: true
         },
@@ -45,23 +47,23 @@ export const routerList = [
         icon: 'el-icon-document',
         children: [
           {
-          path: 'addActicle',
-          component: addActicle,
-          meta:{
-            name: '新增文章',
-            isShow: true
+            path: 'addActicle',
+            component: addActicle,
+            meta: {
+              name: '新增文章',
+              isShow: true
+            },
+            icon: 'el-icon-edit-outline',
           },
-          icon: 'el-icon-edit-outline',
-        },
-        {
-          path: 'articleList',
-          component: articleList,
-          meta: {
-            name: '文章列表',
-            isShow: true
+          {
+            path: 'articleList',
+            component: articleList,
+            meta: {
+              name: '文章列表',
+              isShow: true
+            },
+            icon: 'el-icon-tickets',
           },
-          icon: 'el-icon-tickets',
-        },
           {
             path: 'article',
             component: article,
@@ -79,8 +81,8 @@ export const routerList = [
               isShow: true
             },
             icon: 'el-icon-delete'
-          },          
-      ]
+          },
+        ]
       },
       {
         path: 'category',

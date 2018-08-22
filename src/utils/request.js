@@ -2,9 +2,10 @@ import axios from 'axios'
 import {resolve} from 'url';
 import store from '@/store'
 import {Message} from 'element-ui';
+import router from '@/router';
 
 axios.defaults.timeout = 10000;
-//axios.defaults.baseURL = 'http://localhost:8181/';
+// axios.defaults.baseURL = 'http://localhost:8181/';
 axios.defaults.baseURL = 'http://39.108.174.244:8181/';
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
@@ -29,6 +30,7 @@ axios.interceptors.response.use(function (response) {
     switch (error.response.status) {
       case 401:
         console.log('未授权，请重新登录')
+        router.push({name: 'login'});
         break;
 
       default:

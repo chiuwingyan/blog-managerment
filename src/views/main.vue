@@ -15,7 +15,7 @@
       </el-dropdown>
       <span>{{this.$store.state.username}}</span>
     </el-header>
-    
+
     <el-main>
       <section class="main">
         <el-collapse-transition>
@@ -27,11 +27,11 @@
 </el-container>
 
   </div>
-  
+
 </template>
 
 <script>
-import request from 'utils/request' 
+import request from 'utils/request'
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 import Nav from '@/components/nav'
 export default {
@@ -77,12 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/scss">
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-  
+
   .el-aside {
     color: #333;
   }

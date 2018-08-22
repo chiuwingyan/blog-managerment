@@ -8,7 +8,7 @@
       stripe
       style="width: 100% ">
       <el-table-column
-        prop="id"
+        prop="categoryId"
         label="id"
         width="380">
       </el-table-column>

@@ -8,7 +8,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import request from 'utils/request'
+
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 export default {
   data() {
@@ -26,7 +26,7 @@ export default {
             password:this.pwd,
             username:this.username
         };
-        const resp = await request.post('auth/login',params);
+        const resp = await this.$request().post('auth/login',params);
         console.log('resp',resp)
         this.$store.commit('setToken',`Bearer ${resp.data.data.token}`);
         this.$store.commit('setUsername',resp.data.data.nickName);

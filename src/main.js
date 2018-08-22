@@ -10,19 +10,21 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
-
+import request from 'utils/request'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(mavonEditor)
-
+Vue.prototype.$request = function(){
+  return request;
+}
 Vue.directive('highlight', (el) => {
   let blocks = el.querySelectorAll('pre code')
   blocks.forEach((block) => {
     hljs.highlightBlock(block)
   })
 })
-/* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router,

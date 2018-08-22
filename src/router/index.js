@@ -42,7 +42,7 @@ export const routerList = [
           isShow: true
         },
         component: middle,
-        icon: 'el-icon-menu',
+        icon: 'el-icon-document',
         children: [
           {
           path: 'addActicle',
@@ -51,7 +51,7 @@ export const routerList = [
             name: '新增文章',
             isShow: true
           },
-          icon: 'el-icon-menu',
+          icon: 'el-icon-edit-outline',
         },
         {
           path: 'articleList',
@@ -60,7 +60,7 @@ export const routerList = [
             name: '文章列表',
             isShow: true
           },
-          icon: 'el-icon-menu',
+          icon: 'el-icon-tickets',
         },
           {
             path: 'article',
@@ -78,7 +78,7 @@ export const routerList = [
               name: '回收站',
               isShow: true
             },
-            icon: 'el-icon-menu'
+            icon: 'el-icon-delete'
           },          
       ]
       },

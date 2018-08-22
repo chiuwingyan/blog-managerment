@@ -1,19 +1,39 @@
 <template>
   <div>
-    <mavon-editor v-model="value" :ishljs="true" @imgAdd="$imgAdd" ref=md ></mavon-editor>
+  <el-input v-model="title" placeholder="输入文章标题" class="title"></el-input>
+    <mavon-editor v-model="content" :ishljs="true" @imgAdd="$imgAdd" ref=md ></mavon-editor>
+    文章简介：<el-input
+    type="textarea"
+    :autosize="{ minRows: 3, maxRows: 3}"
+    placeholder="请输入文章简介"
+    v-model="shortDesc" class="shortDesc-input">
+</el-input>
+    文章分类：<el-select v-model="category" filterable placeholder="请选择">
+          <el-option
+            v-for="item in categoryList"
+            :key="item.id"
+            :label="item.categoryName"
+            :value="item.id">
+          </el-option>
+  </el-select>
+
   </div>
   
 </template>
 
 <script>
-import request from 'utils/request' 
+
 export default {
-  mounted(){
-   // console.log($vm)
+  created(){
+  this.fetchCategoryList()
   },
   data(){
     return {
-      value:''
+      title:'',
+      content:'',
+      shortDesc:'',
+      category:null,
+      categoryList:[]
     }
   },
   methods:{
@@ -31,7 +51,17 @@ export default {
                // $vm.$img2Url 详情见本页末尾
                $vm.$img2Url(pos, url);
            })
-        }
+        },
+  //获取分类目录 
+  async fetchCategoryList(){
+    console.log(this.$request)
+    const resp = await this.$request().get(`category/list?rows=${100}`);
+    this.categoryList = resp.data.data;
+  },
+  //获取标签目录
+  fetchTagList(){
+  
+  }
   },
   computed:{
 
@@ -43,5 +73,17 @@ export default {
 .v-note-wrapper{
   width: 100% !important;
   height: 600px !important;
+  margin-bottom: 20px;
 }
+.title{
+  margin-bottom: 20px;
+  width: 15%;
+}
+
+.shortDesc-input{
+  width: 20%;
+  margin-right: 50px;
+}
+
+
 </style>

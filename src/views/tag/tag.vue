@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import request from '@/utils/request'
+
 
   export default {
     data() {
@@ -58,7 +58,7 @@
     methods: {
       //获取标签列表数据
       async getTagList(page) {
-        const resp = await request.get(`/tag/list?page=${page || 1}`);
+        const resp = await this.$request().get(`/tag/list?page=${page || 1}`);
         this.list = resp.data;
       },
       //新增

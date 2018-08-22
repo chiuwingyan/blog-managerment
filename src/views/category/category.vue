@@ -44,7 +44,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import request from '@/utils/request'
+
 
   export default {
     created() {
@@ -63,7 +63,7 @@
         // if (!page) {
         //   page = 1;
         // }
-        const resp = await request.get(`category/list?page=${page || 1}`);
+        const resp = await this.$request().get(`category/list?page=${page || 1}`);
         this.list = resp.data;
       },
       //更新

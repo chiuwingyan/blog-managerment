@@ -16,7 +16,7 @@
             :value="item.id">
           </el-option>
   </el-select>
-  <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag"></tagSelect>
+  <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag" :tags="tags"></tagSelect>
   </div>
   
 </template>
@@ -29,6 +29,7 @@ export default {
   },
   created(){
   this.fetchCategoryList();
+  this.fetchTagList()
   },
   data(){
     return {
@@ -39,6 +40,7 @@ export default {
       categoryList:[],
       tagList:[],
       selectedTag:[8],
+      tags:[]
 
     }
   },
@@ -67,7 +69,12 @@ export default {
   //当选择的标签发生改变时，子组件的回调
   selectTagChange(newArr){
     this.selectedTag=newArr
-  }
+  },
+          async fetchTagList(){
+            const resp = await this.$request().get(`tag/list?rows=${100}`);
+            this.tags= resp.data.data;
+            
+        },
   },
   computed:{
 

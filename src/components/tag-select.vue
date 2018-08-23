@@ -3,11 +3,11 @@
      文章标签：
      <el-tag
         :key="tag"
-        v-for="tag in selectedTag"
+        v-for="tag in filterTagName"
         closable
         :disable-transitions="false"
-        @close="handleClose(tag)">
-        {{filterTagName(tag)}}
+        @close="handleClose(tag.id)">
+        {{tag.tagName}}
     </el-tag>
     <el-input
         class="input-new-tag"
@@ -29,13 +29,19 @@
 <script type="text/ecmascript-6">
 export default {
 created(){
-    this.fetchTagList();
+    //this.fetchTagList();
     this.selectedTag = this.myTags
 },
 props:{
     myTags:{
         type:Array,
         default:function () {
+            return []
+        }
+    },
+    tags:{
+        type:Array,
+        default:function (){
             return []
         }
     }
@@ -45,8 +51,7 @@ props:{
      selectedTag:[],
      inputVisible:false,
      newTagInput:'',
-     tags:[],
-     nowTagName:''
+     nowTagName:'',
  }
  },
  watch:{
@@ -55,14 +60,26 @@ props:{
          this.$emit('selectTagChange',this.selectedTag)
      }
  },
-
+computed:{
+    filterTagName(){
+        let arr=[]
+        this.selectedTag.filter((item) => {
+            this.tags.filter((tag) => {
+                if(item == tag.id){
+                    arr.push(tag)
+                }
+            })
+        })
+        return arr
+    }
+},
  methods:{
-       //获取标签目录
-        async fetchTagList(){
-            const resp = await this.$request().get(`tag/list?rows=${100}`);
-            this.tags= resp.data.data;
+    //    //获取标签目录
+    //     async fetchTagList(){
+    //         const resp = await this.$request().get(`tag/list?rows=${100}`);
+    //         this.tags= resp.data.data;
             
-        },
+    //     },
         //新增标签请求
         async addTag(){
         let params = {
@@ -84,16 +101,7 @@ props:{
           this.$refs.saveTagInput.$refs.input.focus();
         });
       },
-      filterTagName(tag){
-          console.log('tag',tag)
-          this.tags.filter((item)=>{
-              console.log('item',item.id)
-              if(tag == item.id){
-                console.log('name',item.tagName)
-                 return item.tagName
-              }
-          })
-      }
+
  }
 }
 </script>

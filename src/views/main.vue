@@ -1,10 +1,10 @@
 <template>
   <div>
-<el-container :style="'height:'+ height+'px; border: 1px solid #eee'">
+<el-container :style="'height:'+ height+'px; border: 1px solid #eee;'">
 
   <Nav></Nav>
   <el-container>
-    <el-header style="text-align: right; font-size: 12px">
+    <el-header style="text-align: right; font-size: 12px;background-color:#C0C4CC">
       <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">

@@ -81,9 +81,9 @@
         };
         let resp = null;
         if (id) {
-          resp = await request.put('/tag/update', params);
+          resp = await this.$request().put('/tag/update', params);
         } else {
-          resp = await request.post('/tag/add', params);
+          resp = await this.$request().post('/tag/add', params);
         }
 
         if (resp) {
@@ -107,7 +107,7 @@
           type: 'warning'
         }).then(() => {
 
-          let resp = request.delete('/tag/delete?ids=' + id);
+          let resp = this.$request().delete('/tag/delete?ids=' + id);
           if (resp) {
             this.$message({
               type: 'success',

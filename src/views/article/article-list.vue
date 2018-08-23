@@ -3,7 +3,7 @@
     <el-input
       placeholder="请输入文章标题"
       prefix-icon="el-icon-search"
-      v-model="inputVal"
+      v-model="categoryTitile"
       style="width:20%;margin-bottom:30px;margin-right:10px">
     </el-input>
     <el-select v-model="categoryId" clearable filterable placeholder="文章分类">
@@ -49,8 +49,8 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+     
+      
       :current-page.sync="currentPage"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="10"
@@ -70,6 +70,7 @@
         categoryId: '',
         //分类列表
         categoryList: [],
+        categoryTitile:'',
         articleList: [],
         list: [],
         updateQuery: {},
@@ -93,6 +94,9 @@
         let resp = await this.$request().get('category/all');
         this.categoryList = resp.data;
       },
+      currentPage(){
+        
+      }
     }
   }
 </script>

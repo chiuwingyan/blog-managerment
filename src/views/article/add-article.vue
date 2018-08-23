@@ -7,7 +7,7 @@
     :autosize="{ minRows: 3, maxRows: 3}"
     placeholder="请输入文章简介"
     v-model="shortDesc" class="shortDesc-input">
-</el-input>
+  </el-input>
     文章分类：<el-select v-model="category" filterable placeholder="请选择">
           <el-option
             v-for="item in categoryList"
@@ -16,16 +16,19 @@
             :value="item.id">
           </el-option>
   </el-select>
-
+  <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag"></tagSelect>
   </div>
   
 </template>
 
 <script>
-
+import tagSelect from '@/components/tag-select'
 export default {
+  components:{
+    tagSelect
+  },
   created(){
-  this.fetchCategoryList()
+  this.fetchCategoryList();
   },
   data(){
     return {
@@ -33,7 +36,10 @@ export default {
       content:'',
       shortDesc:'',
       category:null,
-      categoryList:[]
+      categoryList:[],
+      tagList:[],
+      selectedTag:[8],
+
     }
   },
   methods:{
@@ -58,9 +64,9 @@ export default {
     const resp = await this.$request().get(`category/list?rows=${100}`);
     this.categoryList = resp.data.data;
   },
-  //获取标签目录
-  fetchTagList(){
-  
+  //当选择的标签发生改变时，子组件的回调
+  selectTagChange(newArr){
+    this.selectedTag=newArr
   }
   },
   computed:{

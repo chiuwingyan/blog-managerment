@@ -2,7 +2,7 @@
  <div class="tag-select">
      文章标签：
      <el-tag
-        :key="tag"
+        :key="tag.id"
         v-for="tag in filterTagName"
         closable
         :disable-transitions="false"

@@ -17,6 +17,14 @@
           </el-option>
   </el-select>
   <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag" :tags="tags"></tagSelect>
+  <section class="comment">
+    开启评论：<el-switch
+    v-model="openComment"
+    active-text="开启"
+    inactive-text="关闭">
+</el-switch>
+  </section>
+<el-button type="primary" class="comfirm">发布文章</el-button>
   </div>
   
 </template>
@@ -40,7 +48,8 @@ export default {
       categoryList:[],
       tagList:[],
       selectedTag:[8],
-      tags:[]
+      tags:[],
+      openComment:true
 
     }
   },
@@ -96,6 +105,9 @@ export default {
 .shortDesc-input{
   width: 20%;
   margin-right: 50px;
+}
+.comment{
+  margin-top: 20px;
 }
 
 

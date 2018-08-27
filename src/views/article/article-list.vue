@@ -54,7 +54,7 @@
         label="操作"
         width="200">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.id,scope.row.categoryName)" type="text" size="small">编辑</el-button>
+          <el-button @click="update(scope.row.articleId)" type="text" size="small">编辑</el-button>
           <el-button type="text" size="small" @click="deleted(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -108,6 +108,12 @@
       },
       currentPage(){
         
+      },
+      update(id){
+        console.log('id',id)
+        this.$router.push({
+          path: `/main/article/updateActicle/${id}`,
+        })
       }
     }
   }

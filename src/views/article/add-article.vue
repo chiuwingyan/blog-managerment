@@ -40,6 +40,10 @@ export default {
   created(){
   this.fetchCategoryList();
  // this.fetchTagList()
+    if(this.$route.params.id){
+    this.fetchActicleDetail(this.$route.params.id)
+   
+    }
   },
   data(){
     return {
@@ -76,6 +80,16 @@ export default {
     console.log(this.$request)
     const resp = await this.$request().get(`category/list?rows=${100}`);
     this.categoryList = resp.data.data;
+  },
+  //获取文章详情
+  async fetchActicleDetail(id){
+    const resp = await this.$request().get(`article/info/${id}`);
+    this.title=resp.data.mainTitle;
+    this.content=resp.data.content;
+    this.category = resp.data.categoryId;
+    this.shortDesc=resp.data.shortDesc;
+    this.openComment = resp.data.publish
+
   },
   //当选择的标签发生改变时，子组件的回调
   selectTagChange(newArr){

@@ -65,6 +65,15 @@ export const routerList = [
             icon: 'el-icon-tickets',
           },
           {
+            path: 'updateActicle/:id',
+            component: addActicle,
+            name: 'updateActicle',
+            meta: {
+              name: '更新文章',
+              isShow: false
+            }
+          },
+          {
             path: 'article',
             component: article,
             meta: {

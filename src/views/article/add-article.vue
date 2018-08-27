@@ -11,12 +11,12 @@
     文章分类：<el-select v-model="category" filterable placeholder="请选择">
           <el-option
             v-for="item in categoryList"
-            :key="item.id"
+            :key="item.categoryId"
             :label="item.categoryName"
-            :value="item.id">
+            :value="item.categoryId">
           </el-option>
   </el-select>
-  <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag" :tags="tags"></tagSelect>
+  <tagSelect  @selectTagChange="selectTagChange"  ></tagSelect>
   <section class="comment">
     开启评论：<el-switch
     v-model="openComment"
@@ -24,7 +24,9 @@
     inactive-text="关闭">
 </el-switch>
   </section>
-<el-button type="primary" class="comfirm">发布文章</el-button>
+  <section class="btn"><el-button type="primary" class="comfirm" @click="release">发布文章</el-button>
+    <el-button type="primary" plain @click="save">保存修改</el-button>
+  </section>
   </div>
   
 </template>
@@ -37,7 +39,7 @@ export default {
   },
   created(){
   this.fetchCategoryList();
-  this.fetchTagList()
+ // this.fetchTagList()
   },
   data(){
     return {
@@ -47,7 +49,7 @@ export default {
       category:null,
       categoryList:[],
       tagList:[],
-      selectedTag:[8],
+      selectedTag:[],
       tags:[],
       openComment:true
 
@@ -84,6 +86,52 @@ export default {
             this.tags= resp.data.data;
             
         },
+  //发布文章
+  async release(){
+    let params = {
+          "categoryId": this.category,
+          "content": this.content,
+          "mainTitle":this.title,
+          "openComment":this.openComment,
+          "shortDesc": this.shortDesc,
+          "tags": this.selectedTag,
+          "publish": true
+        };
+    const resp = await this.$request().post('article/add',params)
+    if(resp.data.code === 1){
+        this.$message({
+          message: '发布成功',
+          type: 'success'
+        });
+        this.$router.push('articleList');
+      
+    }else{
+       this.$message.error('发布失败，请重试');
+    }
+  },
+  //保存修改
+ async save(){
+    let params = {
+          "categoryId": this.category,
+          "content": this.content,
+          "mainTitle":this.title,
+          "openComment":this.openComment,
+          "shortDesc": this.shortDesc,
+          "tags": this.selectedTag,
+          "publish": false
+        };
+    const resp = await this.$request().post('article/add',params)
+       if(resp.data.code === 1){
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        });
+        this.$router.push('articleList');
+      
+    }else{
+       this.$message.error('保存失败，请重试');
+    }
+  }
         
   },
   computed:{
@@ -108,8 +156,13 @@ export default {
   margin-right: 50px;
 }
 .comment{
-  margin-top: 20px;
+  margin: 20px 0 40px 0;
 }
-
+.btn{
+  margin:0 0 40px 60px;
+  .el-button{
+    margin-right: 60px;
+  }
+}
 
 </style>

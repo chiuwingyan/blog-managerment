@@ -58,7 +58,11 @@
     methods: {
       //获取标签列表数据
       async getTagList(page) {
-        const resp = await this.$request().get(`/tag/list?page=${page || 1}`);
+        if (page) {
+           this.page=page
+        }
+       
+        const resp = await this.$request().get(`/tag/list?page=${page || this.page}`);
         this.list = resp.data;
       },
       //新增
@@ -113,6 +117,9 @@
               type: 'success',
               message: '删除成功!'
             });
+            if(resp.data.data.pageCount < this.page ){
+              this.page = this.page -1;
+            }
             this.getTagList();
           }
         });

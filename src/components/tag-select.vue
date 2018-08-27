@@ -29,19 +29,13 @@
 <script type="text/ecmascript-6">
 export default {
 created(){
-    //this.fetchTagList();
+    this.fetchTagList();
     this.selectedTag = this.myTags
 },
 props:{
     myTags:{
         type:Array,
         default:function () {
-            return []
-        }
-    },
-    tags:{
-        type:Array,
-        default:function (){
             return []
         }
     }
@@ -52,6 +46,7 @@ props:{
      inputVisible:false,
      newTagInput:'',
      nowTagName:'',
+     tags:[]
  }
  },
  watch:{
@@ -74,21 +69,27 @@ computed:{
     }
 },
  methods:{
-    //    //获取标签目录
-    //     async fetchTagList(){
-    //         const resp = await this.$request().get(`tag/list?rows=${100}`);
-    //         this.tags= resp.data.data;
+       //获取标签目录
+        async fetchTagList(){
+            const resp = await this.$request().get(`tag/list?rows=${100}`);
+            this.tags= resp.data.data;
             
-    //     },
+        },
         //新增标签请求
         async addTag(){
         let params = {
             tagName:this.newTagInput
             };
         let resp = await this.$request().post('tag/add',params);
-        this.selectedTag.push(resp.data.data.id)
+        this.selectedTag.push(resp.data.data.id);
+        this.tags.push(resp.data.data)
         },
         handleInputConfirm(){
+            if(this.newTagInput === "")  {
+                this.inputVisible = false; 
+                return;
+            }
+             debugger
             this.addTag();
             this.inputVisible = false;
         },

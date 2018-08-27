@@ -26,17 +26,28 @@
 
       <el-table-column
         prop="categoryName"
-        label="文章分类">
+        label="文章分类"
+         width="180">
       </el-table-column>
       <el-table-column
         prop="createTime"
         label="创建时间"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="updateTime"
         label="更新时间"
+       >
+      </el-table-column>
+      <el-table-column
+        prop="publish"
+        label="是否已发布"
         width="180">
+      <template slot-scope="scope">
+        <el-tag
+          :type="scope.row.publish=== false ? 'primary' : 'danger'"
+          close-transition>{{scope.row.publish === false?'否':'是'}}</el-tag>
+      </template>
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -49,15 +60,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
-     
-      
-      :current-page.sync="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
       :page-count="list.pageCount"
       :current-page="list.page"
-      layout="sizes, prev, pager, next"
-      :total="list.totalCount">
+      :page-size="list.pageSize"
+      layout="prev, pager, next"
+      :total="list.totalCount"
+      @current-change="fetchList"
+     >
     </el-pagination>
   </div>
 </template>
@@ -74,7 +83,7 @@
         articleList: [],
         list: [],
         updateQuery: {},
-        page: 1
+        page: 1,
       }
     },
 
@@ -84,7 +93,10 @@
     },
     methods: {
       async fetchList(page) {
-        let resp = await this.$request().get(`article/list?page=${page || 1}`);
+        if(page)
+        this.page=page;
+
+        let resp = await this.$request().get(`article/list?page=${page || this.page}`);
         this.list = resp.data;
       },
       /**

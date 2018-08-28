@@ -5,7 +5,7 @@ import login from "@/views/common/login";
 const main = () => import('@/views/main')
 const home = () => import('@/views/home')
 const addActicle = () => import('@/views/article/add-article')
-const articleList = () => import('@/views/article/article-list')
+const articleList = () => import('@/components/article-list-com')
 const article = () => import('@/views/article/article')
 const category = () => import('@/views/category/category')
 const tag = () => import('@/views/tag/tag')
@@ -57,21 +57,33 @@ export const routerList = [
           },
           {
             path: 'articleList',
-            component: articleList,
+            component: middle,
+            redirect: 'articleList/articleListCom',
             meta: {
               name: '文章列表',
               isShow: true
             },
             icon: 'el-icon-tickets',
-          },
+            children:[
+            {
+              path: 'updateActicle/:id',
+              component: addActicle,
+              name: 'updateActicle',
+              meta: {
+                name: '更新文章',
+                isShow: false
+              }
+            },
           {
-            path: 'updateActicle/:id',
-            component: addActicle,
-            name: 'updateActicle',
-            meta: {
-              name: '更新文章',
-              isShow: false
-            }
+             path: 'articleListCom',
+              component: articleList,
+               meta: {
+                 name: '文章列表',
+                 isShow: true
+               },
+               icon: 'el-icon-tickets',
+          }
+            ]
           },
           {
             path: 'article',

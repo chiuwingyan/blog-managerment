@@ -1,9 +1,10 @@
 import axios from 'axios'
 import {resolve} from 'url';
 import store from '@/store'
-import {Message} from 'element-ui';
+import {Message,Loading} from 'element-ui';
 import router from '@/router';
 
+let loading;
 axios.defaults.timeout = 10000;
 // axios.defaults.baseURL = 'http://localhost:8181/';
 axios.defaults.baseURL = 'http://39.108.174.244:8181/';
@@ -12,6 +13,7 @@ axios.defaults.headers = {
 }
 //发送请求前的拦截器
 axios.interceptors.request.use(function (config) {
+  loading = Loading.service({ fullscreen: true, text: '疯狂加载中' });
   if (store.state.token && store.state.token !== null) {
     config.headers['Authorization'] = store.state.token;
   }
@@ -23,6 +25,7 @@ axios.interceptors.request.use(function (config) {
 //请求相应前的拦截器
 axios.interceptors.response.use(function (response) {
   console.log(response);
+  loading.close();
   return response;
 }, function (error) {
   console.log('error', error)

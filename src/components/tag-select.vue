@@ -20,7 +20,7 @@
     >
     </el-input>
     <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-  <el-checkbox-group v-model="selectedTag"  v-if="tags && tags.length>0">
+  <el-checkbox-group v-model="myTags"  v-if="tags && tags.length>0">
     <el-checkbox v-for="tag in tags" :label="tag.id" :key="tag.id">{{tag.tagName}}</el-checkbox>
   </el-checkbox-group>
  </div>
@@ -30,7 +30,8 @@
 export default {
 created(){
     this.fetchTagList();
-    this.selectedTag = this.myTags
+ //   this.selectedTag = this.myTags
+    console.log(this.myTags)
 },
 props:{
     myTags:{
@@ -42,7 +43,6 @@ props:{
 },
  data() {
  return {
-     selectedTag:[],
      inputVisible:false,
      newTagInput:'',
      nowTagName:'',
@@ -50,15 +50,15 @@ props:{
  }
  },
  watch:{
-     selectedTag:function(){
+     myTags:function(){
          
-         this.$emit('selectTagChange',this.selectedTag)
+         this.$emit('selectTagChange',this.myTags)
      }
  },
 computed:{
     filterTagName(){
         let arr=[]
-        this.selectedTag.filter((item) => {
+        this.myTags.filter((item) => {
             this.tags.filter((tag) => {
                 if(item == tag.id){
                     arr.push(tag)
@@ -81,7 +81,7 @@ computed:{
             tagName:this.newTagInput
             };
         let resp = await this.$request().post('tag/add',params);
-        this.selectedTag.push(resp.data.data.id);
+        this.myTags.push(resp.data.data.id);
         this.tags.push(resp.data.data)
         },
         handleInputConfirm(){
@@ -94,7 +94,7 @@ computed:{
             this.inputVisible = false;
         },
         handleClose(tag){
-            this.selectedTag.splice(this.selectedTag.indexOf(tag),1);
+            this.myTags.splice(this.myTags.indexOf(tag),1);
         },
         showInput() {
         this.inputVisible = true;

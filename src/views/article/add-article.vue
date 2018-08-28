@@ -16,7 +16,7 @@
             :value="item.categoryId">
           </el-option>
   </el-select>
-  <tagSelect  @selectTagChange="selectTagChange"  ></tagSelect>
+  <tagSelect  @selectTagChange="selectTagChange" :myTags="selectedTag" ></tagSelect>
   <section class="comment">
     开启评论：<el-switch
     v-model="openComment"
@@ -25,7 +25,8 @@
 </el-switch>
   </section>
   <section class="btn"><el-button type="primary" class="comfirm" @click="release">发布文章</el-button>
-    <el-button type="primary" plain @click="save">保存修改</el-button>
+    <el-button type="primary" plain @click="save" v-if="!publish">保存修改</el-button>
+     <el-button v-if="$route.params.id" @click="back">返回</el-button>
   </section>
   </div>
   
@@ -41,8 +42,7 @@ export default {
   this.fetchCategoryList();
  // this.fetchTagList()
     if(this.$route.params.id){
-    this.fetchActicleDetail(this.$route.params.id)
-   
+    this.fetchActicleDetail(this.$route.params.id);
     }
   },
   data(){
@@ -55,7 +55,9 @@ export default {
       tagList:[],
       selectedTag:[],
       tags:[],
-      openComment:true
+      openComment:true,
+      publish:false,
+      articleId:null
 
     }
   },
@@ -88,8 +90,10 @@ export default {
     this.content=resp.data.content;
     this.category = resp.data.categoryId;
     this.shortDesc=resp.data.shortDesc;
-    this.openComment = resp.data.publish
-
+    this.openComment = resp.data.publish;
+    this.articleId = resp.data.articleId;
+    this.publish = resp.data.publish;
+    this.selectedTag = resp.data.tagIds;
   },
   //当选择的标签发生改变时，子组件的回调
   selectTagChange(newArr){
@@ -108,10 +112,18 @@ export default {
           "mainTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
-          "tags": this.selectedTag,
+          "tagIds": this.selectedTag,
           "publish": true
         };
-    const resp = await this.$request().post('article/add',params)
+
+    let resp;
+    if(this.$route.params.id){
+      let idParams = { "articleId":this.articleId }
+      Object.assign(params,idParams)
+     resp = await this.$request().put('article/update',params)
+    }else{
+     resp = await this.$request().post('article/add',params)
+    }
     if(resp.data.code === 1){
         this.$message({
           message: '发布成功',
@@ -131,10 +143,17 @@ export default {
           "mainTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
-          "tags": this.selectedTag,
+          "tagIds": this.selectedTag,
           "publish": false
         };
-    const resp = await this.$request().post('article/add',params)
+   let resp;
+    if(this.$route.params.id){
+      let idParams = { "articleId":this.articleId }
+      Object.assign(params,idParams)
+      resp = await this.$request().put('/article/update',params)
+    }else{
+      resp = await this.$request().post('article/add',params)
+    }
        if(resp.data.code === 1){
         this.$message({
           message: '保存成功',
@@ -145,6 +164,9 @@ export default {
     }else{
        this.$message.error('保存失败，请重试');
     }
+  },
+  back(){
+    this.$router.go(-1)
   }
         
   },

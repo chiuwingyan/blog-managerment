@@ -101,29 +101,27 @@
         this.addOrUpdateDialog(id, name);
       },
       //删除
-    deleted(id) {
+      deleted(id) {
         this.$confirm('确定要删除该标签?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputValue: this.categoryName,
           type: 'warning'
         }).then(() => {
-          this.confirmDelete(id)
-        });
-      },
-    async confirmDelete(id){
-          let resp = await this.$request().delete('/tag/delete?ids=' + id);
+
+          let resp = this.$request().delete('/tag/delete?ids=' + id);
           if (resp) {
             this.$message({
               type: 'success',
               message: '删除成功!'
             });
-            console.log('page',resp)
-            this.page = 1;
-            console.log(this)
+            if(resp.data.data.pageCount < this.page ){
+              this.page = this.page -1;
+            }
             this.getTagList();
           }
-      }
+        });
+      },
     }
   }
 </script>

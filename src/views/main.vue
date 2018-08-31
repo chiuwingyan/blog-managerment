@@ -2,9 +2,10 @@
   <div>
 <el-container :style="'height:'+ height+'px; border: 1px solid #eee;'">
 
-  <Nav></Nav>
-  <el-container>
-    <el-header style="text-align: right; font-size: 12px;background-color:#C0C4CC">
+  
+
+    <el-header style="text-align: right; font-size: 12px;background-color:#ffffff">
+      <div class="logo">BLOG管理后台</div>
       <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
@@ -16,11 +17,14 @@
       <span>{{this.$store.state.username}}</span>
     </el-header>
 
-    <el-main>
-      <section class="main">
+      <el-container>
+        <Nav></Nav>
+        <el-main>
+          <breadcrumb></breadcrumb>
+        <section class="main">
         <el-collapse-transition>
          <router-view></router-view>
-         </el-collapse-transition>
+        </el-collapse-transition>
       </section>
     </el-main>
   </el-container>
@@ -34,9 +38,11 @@
 import request from 'utils/request'
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 import Nav from '@/components/nav'
+import breadcrumb from '@/components/breadcrumb'
 export default {
   components:{
-      Nav
+      Nav,
+      breadcrumb
   },
   data(){
     return{
@@ -77,7 +83,21 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/scss">
-
+  .el-header{
+   box-shadow:0px 12px 8px -14px #909399;
+   padding: 0;
+   .logo{
+     width: 200px;
+     float: left;
+     height: 100%;
+     text-align: center;
+     background-color:  #45c2b5;
+     color: #ffffff;
+     line-height: 60px;
+     font-size: 20px;
+     font-weight: bold;
+   }
+  }
   .el-aside {
     color: #333;
   }

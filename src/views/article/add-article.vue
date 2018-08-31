@@ -84,7 +84,7 @@ export default {
   //获取文章详情
   async fetchActicleDetail(id){
     const resp = await this.$request().get(`article/info/${id}`);
-    this.title=resp.data.mainTitle;
+    this.title=resp.data.articleTitle;
     this.content=resp.data.content;
     this.category = resp.data.categoryId;
     this.shortDesc=resp.data.shortDesc;
@@ -105,7 +105,7 @@ export default {
     let params = {
           "categoryId": this.category,
           "content": this.content,
-          "mainTitle":this.title,
+          "articleTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
           "tags": this.selectedTag,
@@ -128,7 +128,7 @@ export default {
     let params = {
           "categoryId": this.category,
           "content": this.content,
-          "mainTitle":this.title,
+          "articleTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
           "tags": this.selectedTag,

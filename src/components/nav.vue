@@ -1,10 +1,10 @@
 <template>
-  <el-aside width="200px" style="background-color: #545c64">
+  <el-aside width="200px" style="background-color:#303133">
     <el-menu 
     :default-openeds="['1']"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#BAA645" router
+    background-color="#303133"
+    text-color="#8a979e"
+    active-text-color="#fff" router
     :default-active="$route.path">
 
     <template v-for="(item,index) in router">

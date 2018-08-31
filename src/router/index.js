@@ -5,7 +5,7 @@ import login from "@/views/common/login";
 const main = () => import('@/views/main')
 const home = () => import('@/views/home')
 const addActicle = () => import('@/views/article/add-article')
-const articleList = () => import('@/views/article/article-list')
+const articleList = () => import('@/components/article-list-com')
 const article = () => import('@/views/article/article')
 const category = () => import('@/views/category/category')
 const tag = () => import('@/views/tag/tag')
@@ -31,6 +31,7 @@ export const routerList = [
     children: [{
       path: 'home',
       component: home,
+      name:'首页',
       meta: {
         name: '首页',
         isShow: true
@@ -39,16 +40,21 @@ export const routerList = [
     },
       {
         path: 'article',
+        name: '文章管理',
         meta: {
           name: '文章管理',
           isShow: true
         },
         component: middle,
         icon: 'el-icon-document',
+        redirect:{
+          name:'新增文章'
+        },
         children: [
           {
             path: 'addActicle',
             component: addActicle,
+            name: '新增文章',
             meta: {
               name: '新增文章',
               isShow: true
@@ -57,25 +63,40 @@ export const routerList = [
           },
           {
             path: 'articleList',
-            component: articleList,
+            component: middle,
+            name: '文章列表',
             meta: {
               name: '文章列表',
               isShow: true
             },
             icon: 'el-icon-tickets',
-          },
-          {
-            path: 'updateActicle/:id',
-            component: addActicle,
-            name: 'updateActicle',
-            meta: {
-              name: '更新文章',
-              isShow: false
-            }
+            redirect: { name: '所有文章'},
+            children:[
+              {
+                path: 'list',
+                component: articleList,
+                name: '所有文章',
+                meta: {
+                  name: '所有文章',
+                  isShow: false
+                }
+              },
+              {
+                path: 'updateActicle/:id',
+                component: addActicle,
+                name: 'updateActicle',
+                name: '更新文章',
+                meta: {
+                  name: '更新文章',
+                  isShow: false
+                }
+              },
+            ]
           },
           {
             path: 'article',
             component: article,
+            name: '查看文章',
             meta: {
               name: '查看文章',
               isShow: false
@@ -85,6 +106,7 @@ export const routerList = [
           {
             path: 'recycle',
             component: recycle,
+            name: '回收站',
             meta: {
               name: '回收站',
               isShow: true
@@ -96,6 +118,7 @@ export const routerList = [
       {
         path: 'category',
         component: category,
+        name: '文章分类',
         meta: {
           name: '文章分类',
           isShow: true
@@ -105,6 +128,7 @@ export const routerList = [
       {
         path: 'tag',
         component: tag,
+        name: '文章标签',
         meta: {
           name: '文章标签',
           isShow: true

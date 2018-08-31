@@ -32,7 +32,7 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="mainTitle"
+        prop="articleTitle"
         label="文章标题">
       </el-table-column>
 

@@ -32,42 +32,46 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="mainTitle"
+        prop="articleTitle"
         label="文章标题">
       </el-table-column>
 
       <el-table-column
+        align="center"
+        width="120"
         prop="categoryName"
-        label="文章分类"
-         width="180">
+        label="文章分类">
       </el-table-column>
       <el-table-column
         prop="createTime"
         label="创建时间"
-        >
+        width="180">
       </el-table-column>
       <el-table-column
         prop="updateTime"
         label="更新时间"
-       >
-      </el-table-column>
-      <el-table-column
-        prop="publish"
-        label="是否已发布"
         width="180">
-      <template slot-scope="scope">
-        <el-tag
-          :type="scope.row.publish=== false ? 'primary' : 'danger'"
-          close-transition>{{scope.row.publish === false?'否':'是'}}</el-tag>
-      </template>
       </el-table-column>
       <el-table-column
+        align="center"
+        prop="publish"
+        label="状态"
+        width="120">
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.publish=== false ? 'info' : 'success'"
+            close-transition>{{scope.row.publish === false?'未发布':'已发布'}}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
         fixed="right"
         label="操作"
-        width="200">
+        width="150">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.articleId)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small" @click="deleted(scope.row.articleId)">删除</el-button>
+          <el-button @click="update(scope.row.articleId)" type="primary" plain size="small">编辑</el-button>
+          <el-button type="danger" plain size="small" @click="deleted(scope.row.articleId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,7 +82,7 @@
       layout="prev, pager, next"
       :total="list.totalCount"
       @current-change="fetchList"
-     >
+    >
     </el-pagination>
   </div>
 </template>
@@ -91,12 +95,12 @@
         categoryId: '',
         //分类列表
         categoryList: [],
-        categoryTitile:'',
+        categoryTitile: '',
         articleList: [],
         list: [],
         updateQuery: {},
         page: 1,
-        publish:null
+        publish: null
       }
     },
 
@@ -106,8 +110,8 @@
     },
     methods: {
       async fetchList(page) {
-        if(page)
-        this.page=page;
+        if (page)
+          this.page = page;
 
         let resp = await this.$request().get(`article/list?page=${page || this.page}`);
         this.list = resp.data;
@@ -119,18 +123,18 @@
         let resp = await this.$request().get('category/all');
         this.categoryList = resp.data;
       },
-      currentPage(){
-        
+      currentPage() {
+
       },
       //点击 编辑
-      update(id){
-        console.log('id',id)
+      update(id) {
+        console.log('id', id)
         this.$router.push({
           path: `/main/article/articleList/updateActicle/${id}`,
         })
       },
       //删除文章
-    deleted(id){
+      deleted(id) {
         this.$confirm('确定要删除该标签?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -140,18 +144,18 @@
           this.confirmDelete(id)
         });
       },
-        async confirmDelete(id){
-          let resp = await this.$request().delete('article/delete/' + id);
-          if (resp) {
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-            console.log('page',resp)
-            this.page = 1;
-            console.log(this)
-            this.fetchList();
-          }
+      async confirmDelete(id) {
+        let resp = await this.$request().delete('article/delete/' + id);
+        if (resp) {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          console.log('page', resp)
+          this.page = 1;
+          console.log(this)
+          this.fetchList();
+        }
       }
     }
   }

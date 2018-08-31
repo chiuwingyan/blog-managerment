@@ -18,6 +18,6 @@ export default {
 
 <style lang="scss" scoped="" type="text/scss">
   .el-aside {
-    color: #409EFF;
+    color: #333;
   }
 </style>

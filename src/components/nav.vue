@@ -1,51 +1,51 @@
 <template>
-  <el-aside width="200px" style="background-color: #222d32">
-    <el-menu
-      :default-openeds="['1']"
-      background-color="#222d32"
-      text-color="#b8c7ce"
-      active-text-color="#fff" router
-      :default-active="$route.path">
+  <el-aside width="200px" style="background-color: #545c64">
+    <el-menu 
+    :default-openeds="['1']"
+    background-color="#545c64"
+    text-color="#fff"
+    active-text-color="#BAA645" router
+    :default-active="$route.path">
 
-      <template v-for="(item,index) in router">
-        <el-submenu index="" v-if="item.meta.isShow && item.children && item.children.length>0" :key="index">
+    <template v-for="(item,index) in router">
+        <el-submenu index="" v-if="item.meta.isShow && item.children && item.children.length>0" :key="index"> 
           <template slot="title">
-            <i :class="item.icon"></i>
+          <i :class="item.icon"></i>
             <span slot="title">{{item.meta.name}}</span>
           </template>
-          <el-menu-item :index="'/main/'+item.path+'/'+v.path" v-for="(v,index) in item.children" :key="index"
-                        v-if="v.meta.isShow">
-            <i :class="v.icon"></i>
-            <span slot="title">{{v.meta.name}}</span>
+          <el-menu-item :index="'/main/'+item.path+'/'+v.path" v-for="(v,index) in item.children" :key="index" v-if="v.meta.isShow">
+          <i :class="v.icon"></i>
+          <span slot="title">{{v.meta.name}}</span>
           </el-menu-item>
         </el-submenu>
         <el-menu-item :index="'/main/'+item.path" v-else-if="item.meta.isShow" :key="item.meta.name">
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{item.meta.name}}</span>
+        <i class="el-icon-menu"></i>
+        <span slot="title">{{item.meta.name}}</span>
         </el-menu-item>
         <el-menu-item v-else :key="item.meta.name" v-show="false">
         </el-menu-item>
-
-      </template>
+        
+    </template>
 
     </el-menu>
   </el-aside>
 </template>
 
 <script type="text/ecmascript-6">
-  import {routerList} from '@/router/index'
+import {routerList} from '@/router/index'
+export default {
+mounted(){
+   
+},
+ data() {
+ return {
+     router:routerList[2].children
+ }
+ },
+ components: {
 
-  export default {
-    mounted() {
-
-    },
-    data() {
-      return {
-        router: routerList[2].children
-      }
-    },
-    components: {}
-  }
+ }
+}
 </script>
 
 <style scoped lang="scss" type="text/scss">

@@ -20,6 +20,6 @@ export default {
 
 
   .el-aside {
-    color: #409EFF;
+    color: #333;
   }
 </style>

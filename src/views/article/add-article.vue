@@ -1,7 +1,7 @@
 <template>
   <div>
   <el-input v-model="title" placeholder="输入文章标题" class="title"></el-input>
-    <mavon-editor v-model="content" :ishljs="true" @imgAdd="$imgAdd" ref=md></mavon-editor>
+    <mavon-editor v-model="content" :ishljs="true" @imgAdd="$imgAdd" ref=md ></mavon-editor>
     文章简介：<el-input
     type="textarea"
     :autosize="{ minRows: 3, maxRows: 3}"
@@ -28,7 +28,7 @@
     <el-button type="primary" plain @click="save">保存修改</el-button>
   </section>
   </div>
-
+  
 </template>
 
 <script>
@@ -75,7 +75,7 @@ export default {
                $vm.$img2Url(pos, url);
            })
         },
-  //获取分类目录
+  //获取分类目录 
   async fetchCategoryList(){
     console.log(this.$request)
     const resp = await this.$request().get(`category/list?rows=${100}`);
@@ -84,7 +84,7 @@ export default {
   //获取文章详情
   async fetchActicleDetail(id){
     const resp = await this.$request().get(`article/info/${id}`);
-    this.title=resp.data.articleTitle;
+    this.title=resp.data.mainTitle;
     this.content=resp.data.content;
     this.category = resp.data.categoryId;
     this.shortDesc=resp.data.shortDesc;
@@ -98,14 +98,14 @@ export default {
           async fetchTagList(){
             const resp = await this.$request().get(`tag/list?rows=${100}`);
             this.tags= resp.data.data;
-
+            
         },
   //发布文章
   async release(){
     let params = {
           "categoryId": this.category,
           "content": this.content,
-          "articleTitle":this.title,
+          "mainTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
           "tags": this.selectedTag,
@@ -118,7 +118,7 @@ export default {
           type: 'success'
         });
         this.$router.push('articleList');
-
+      
     }else{
        this.$message.error('发布失败，请重试');
     }
@@ -128,7 +128,7 @@ export default {
     let params = {
           "categoryId": this.category,
           "content": this.content,
-          "articleTitle":this.title,
+          "mainTitle":this.title,
           "openComment":this.openComment,
           "shortDesc": this.shortDesc,
           "tags": this.selectedTag,
@@ -141,12 +141,12 @@ export default {
           type: 'success'
         });
         this.$router.push('articleList');
-
+      
     }else{
        this.$message.error('保存失败，请重试');
     }
   }
-
+        
   },
   computed:{
 

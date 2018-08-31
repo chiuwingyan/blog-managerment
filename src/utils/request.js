@@ -5,8 +5,8 @@ import {Message} from 'element-ui';
 import router from '@/router';
 
 axios.defaults.timeout = 10000;
-axios.defaults.baseURL = 'http://localhost:8181/';
-// axios.defaults.baseURL = 'http://39.108.174.244:8181/';
+// axios.defaults.baseURL = 'http://localhost:8181/';
+axios.defaults.baseURL = 'http://39.108.174.244:8181/';
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
 }
@@ -116,7 +116,7 @@ export default {
         url,
       }).then((resp) => {
         if (resp.data.code === 1) {
-          resolve(resp)
+          resolve(resp.data)
         } else {
           reject(resp.data)
         }

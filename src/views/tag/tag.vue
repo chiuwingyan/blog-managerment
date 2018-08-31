@@ -8,19 +8,21 @@
       style="width: 1000% ">
       <el-table-column
         prop="id"
-        label="id">
+        label="id"
+        width="380">
       </el-table-column>
       <el-table-column
         prop="tagName"
-        label="标签名">
+        label="标签名"
+        width="680">
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作"
         width="200">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.id,scope.row.tagName)" type="primary" plain size="small">修改</el-button>
-          <el-button type="danger" plain size="small" @click="deleted(scope.row.id)">删除</el-button>
+          <el-button @click="update(scope.row.id,scope.row.tagName)" type="text" size="small">修改</el-button>
+          <el-button type="text" size="small" @click="deleted(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +61,7 @@
         if (page) {
            this.page=page
         }
-
+       
         const resp = await this.$request().get(`/tag/list?page=${page || this.page}`);
         this.list = resp.data;
       },

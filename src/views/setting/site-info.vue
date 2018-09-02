@@ -48,6 +48,17 @@
             type: 'error'
           })
         }
+      },
+      /**
+       * 保存站点
+       * @returns {Promise<void>}
+       */
+      async submitForm(){
+        let resp = await this.$request().put('/site/edit',this.siteInfo);
+        this.$message({
+          message: resp.data.msg,
+          type: resp.data.code===1?'success':'error'
+        });
       }
     }
   }

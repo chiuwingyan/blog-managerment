@@ -18,6 +18,7 @@
         width="680">
       </el-table-column>
       <el-table-column
+        width="200"
         align="center"
         fixed="right"
         label="操作">

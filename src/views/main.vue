@@ -2,17 +2,12 @@
   <div>
 <el-container :style="'height:'+ height+'px; border: 1px solid #eee;'">
 
-  
+
 
     <el-header style="text-align: right; font-size: 12px;background-color:#ffffff">
       <div class="logo">BLOG管理后台</div>
       <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
-        </el-dropdown-menu>
       </el-dropdown>
       <span>{{this.$store.state.username}}</span>
     </el-header>
@@ -22,9 +17,9 @@
         <el-main>
           <breadcrumb></breadcrumb>
         <section class="main">
-        <el-collapse-transition>
+         <!--<el-collapse-transition>-->
          <router-view></router-view>
-        </el-collapse-transition>
+        <!--</el-collapse-transition>-->
       </section>
     </el-main>
   </el-container>
@@ -39,8 +34,10 @@ import request from 'utils/request'
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
 import Nav from '@/components/nav'
 import breadcrumb from '@/components/breadcrumb'
+import ElCollapseTransition from "element-ui/src/transitions/collapse-transition";
 export default {
   components:{
+    ElCollapseTransition,
       Nav,
       breadcrumb
   },

@@ -9,6 +9,8 @@ const articleList = () => import('@/components/article-list-com')
 const article = () => import('@/views/article/article')
 const category = () => import('@/views/category/category')
 const tag = () => import('@/views/tag/tag')
+const social = () => import('@/views/setting/social')
+const siteInfo = () => import('@/views/setting/site-info')
 const recycle = () => import('@/views/article/recycle')
 const middle = () => import('@/views/middle')
 Vue.use(Router)
@@ -31,7 +33,7 @@ export const routerList = [
     children: [{
       path: 'home',
       component: home,
-      name:'首页',
+      name: '首页',
       meta: {
         name: '首页',
         isShow: true
@@ -47,8 +49,8 @@ export const routerList = [
         },
         component: middle,
         icon: 'el-icon-document',
-        redirect:{
-          name:'新增文章'
+        redirect: {
+          name: '新增文章'
         },
         children: [
           {
@@ -70,8 +72,8 @@ export const routerList = [
               isShow: true
             },
             icon: 'el-icon-tickets',
-            redirect: { name: '所有文章'},
-            children:[
+            redirect: {name: '所有文章'},
+            children: [
               {
                 path: 'list',
                 component: articleList,
@@ -134,6 +136,38 @@ export const routerList = [
           isShow: true
         },
         icon: 'el-icon-menu',
+      },
+      {
+        path: 'setting',
+        name: '设置',
+        meta: {
+          name: '设置',
+          isShow: true
+        },
+        component: middle,
+        icon: 'el-icon-setting',
+        children: [
+          {
+            path: 'social',
+            component: social,
+            name: '社交信息',
+            meta: {
+              name: '社交信息',
+              isShow: true
+            },
+            icon: 'el-icon-menu',
+          },
+          {
+            path: 'site-info',
+            component: siteInfo,
+            name: '站点信息',
+            meta: {
+              name: '站点信息',
+              isShow: true
+            },
+            icon: 'el-icon-menu',
+          }
+        ]
       }
     ]
   },

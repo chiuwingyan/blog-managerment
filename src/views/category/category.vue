@@ -5,8 +5,8 @@
     <el-button type="primary" @click="addOrUpdateDialog()">新增</el-button>
     <el-table
       :data="list.data"
-      stripe
-      style="width: 100% ">
+      border
+      style="width: 80% ">
       <el-table-column
         prop="categoryId"
         label="id"
@@ -18,12 +18,12 @@
         width="680">
       </el-table-column>
       <el-table-column
+        align="center"
         fixed="right"
-        label="操作"
-        width="200">
+        label="操作">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.id,scope.row.categoryName)" type="text" size="small">修改</el-button>
-          <el-button type="text" size="small" @click="deleted(scope.row.id)">删除</el-button>
+          <el-button @click="update(scope.row.id,scope.row.categoryName)" type="primary" plain size="small">修改</el-button>
+          <el-button type="danger" plain size="small" @click="deleted(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,7 +64,7 @@
         //   page = 1;
         // }
         const resp = await this.$request().get(`category/list?page=${page || 1}`);
-        this.list = resp.data;
+        this.list = resp.data.data;
       },
       //更新
       update(id, name) {

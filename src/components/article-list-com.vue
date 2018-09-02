@@ -33,12 +33,12 @@
       style="width: 100%">
       <el-table-column
         prop="articleTitle"
-        label="文章标题">
+        label="标题">
       </el-table-column>
 
       <el-table-column
         prop="categoryName"
-        label="文章分类"
+        label="分类"
          width="180">
       </el-table-column>
       <el-table-column
@@ -52,22 +52,24 @@
        >
       </el-table-column>
       <el-table-column
+        align="center"
         prop="publish"
         label="是否已发布"
-        width="180">
+        width="120">
       <template slot-scope="scope">
         <el-tag
-          :type="scope.row.publish=== false ? 'primary' : 'danger'"
-          close-transition>{{scope.row.publish === false?'否':'是'}}</el-tag>
+          :type="scope.row.publish=== false ? 'info' : 'success'"
+          close-transition>{{scope.row.publish === false?'未发布':'已发布'}}</el-tag>
       </template>
       </el-table-column>
       <el-table-column
+        align="center"
         fixed="right"
         label="操作"
         width="200">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.articleId)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small" @click="deleted(scope.row.articleId)">删除</el-button>
+          <el-button @click="update(scope.row.articleId)" type="primary" plain size="small">编辑</el-button>
+          <el-button type="danger" plain size="small" @click="deleted(scope.row.articleId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -110,17 +112,17 @@
         this.page=page;
 
         let resp = await this.$request().get(`article/list?page=${page || this.page}`);
-        this.list = resp.data;
+        this.list = resp.data.data;
       },
       /**
        * 获取分类
        */
       async fetchCategory() {
         let resp = await this.$request().get('category/all');
-        this.categoryList = resp.data;
+        this.categoryList = resp.data.data;
       },
       currentPage(){
-        
+
       },
       //点击 编辑
       update(id){
@@ -131,7 +133,7 @@
       },
       //删除文章
     deleted(id){
-        this.$confirm('确定要删除该标签?', '提示', {
+        this.$confirm('确定要删除该文章?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputValue: this.categoryName,
@@ -142,11 +144,11 @@
       },
         async confirmDelete(id){
           let resp = await this.$request().delete('article/delete/' + id);
-          if (resp) {
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
+          this.$message({
+            type: resp===1?'success':'error',
+            message: '删除成功!'
+          });
+          if (resp.code===1) {
             console.log('page',resp)
             this.page = 1;
             console.log(this)

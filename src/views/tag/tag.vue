@@ -4,8 +4,8 @@
     <el-button type="primary" @click="addOrUpdateDialog()">新增</el-button>
     <el-table
       :data="list.data"
-      stripe
-      style="width: 1000% ">
+      border
+      style="width: 80% ">
       <el-table-column
         prop="id"
         label="id"
@@ -21,8 +21,8 @@
         label="操作"
         width="200">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row.id,scope.row.tagName)" type="text" size="small">修改</el-button>
-          <el-button type="text" size="small" @click="deleted(scope.row.id)">删除</el-button>
+          <el-button @click="update(scope.row.id,scope.row.tagName)" type="primary" plain size="small">修改</el-button>
+          <el-button type="danger" plain size="small" @click="deleted(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,11 +59,10 @@
       //获取标签列表数据
       async getTagList(page) {
         if (page) {
-           this.page=page
+          this.page = page
         }
-       
         const resp = await this.$request().get(`/tag/list?page=${page || this.page}`);
-        this.list = resp.data;
+        this.list = resp.data.data;
       },
       //新增
       addOrUpdateDialog(id, initVal) {
@@ -117,8 +116,8 @@
               type: 'success',
               message: '删除成功!'
             });
-            if(resp.data.data.pageCount < this.page ){
-              this.page = this.page -1;
+            if (resp.data.data.pageCount < this.page) {
+              this.page = this.page - 1;
             }
             this.getTagList();
           }

@@ -6,9 +6,9 @@
 
     <el-header style="text-align: right; font-size: 12px;background-color:#ffffff">
       <div class="logo">BLOG管理后台</div>
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
-      </el-dropdown>
+      <!--<el-dropdown>-->
+        <!--<i class="el-icon-setting" style="margin-right: 15px"></i>-->
+      <!--</el-dropdown>-->
       <span>{{this.$store.state.username}}</span>
     </el-header>
 

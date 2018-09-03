@@ -18,7 +18,7 @@
         :value="item.categoryId">
       </el-option>
     </el-select>
-    <tagSelect @selectTagChange="selectTagChange"></tagSelect>
+    <tagSelect @selectTagChange="selectTagChange" :myTags="selectedTag"></tagSelect>
     <section class="comment">
       开启评论：
       <el-switch
@@ -84,7 +84,7 @@
       async fetchCategoryList() {
         console.log(this.$request)
         const resp = await this.$request().get(`category/list?rows=${100}`);
-        this.categoryList = resp.data.data;
+        this.categoryList = resp.data.data.data;
       },
       //获取文章详情
       async fetchActicleDetail(id) {
@@ -93,8 +93,8 @@
         this.content = resp.data.data.content;
         this.category = resp.data.data.categoryId;
         this.shortDesc = resp.data.data.shortDesc;
-        this.openComment = resp.data.data.publish
-
+        this.openComment = resp.data.data.publish;
+        this.selectedTag = resp.data.data.tagIds;
       },
       //当选择的标签发生改变时，子组件的回调
       selectTagChange(newArr) {

@@ -29,20 +29,18 @@
 <script type="text/ecmascript-6">
   export default {
     created() {
+    //  this.selectedTag = this.myTags;
       this.fetchTagList();
-      this.selectedTag = this.myTags
+
     },
     props: {
       myTags: {
-        type: Array,
-        default: function () {
-          return []
-        }
+        type: Array
       }
     },
     data() {
       return {
-        selectedTag: [],
+        selectedTag: this.myTags,
         inputVisible: false,
         newTagInput: '',
         nowTagName: '',

@@ -13,6 +13,7 @@ const social = () => import('@/views/setting/social')
 const siteInfo = () => import('@/views/setting/site-info')
 const recycle = () => import('@/views/article/recycle')
 const middle = () => import('@/views/middle')
+const comment = () => import('@/views/comment/comment')
 Vue.use(Router)
 
 
@@ -136,6 +137,28 @@ export const routerList = [
           isShow: true
         },
         icon: 'el-icon-menu',
+      },
+      {
+        path: 'comment',
+        name: '评论管理',
+        meta: {
+          name: '评论管理',
+          isShow: true
+        },
+        component: middle,
+        icon: 'el-icon-document',
+        children: [
+          {
+            path: 'comment',
+            component: comment,
+            name: '评论列表',
+            meta: {
+              name: '评论列表',
+              isShow: true
+            },
+            icon: 'el-icon-menu'
+          }
+        ]
       },
       {
         path: 'setting',

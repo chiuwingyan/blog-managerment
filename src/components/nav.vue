@@ -3,7 +3,7 @@
     <el-menu
       background-color="#303133"
       text-color="#8a979e"
-      active-text-color="#fff" router unique-opened="true">
+      active-text-color="#fff" router :unique-opened="true">
 
       <template v-for="(item,index) in router">
         <!--有子菜单的-->

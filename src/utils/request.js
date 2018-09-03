@@ -50,7 +50,7 @@ export default {
         params: param,
       }).then((resp) => {
         if (resp.data.code === 1) {
-          resolve(resp.data)
+          resolve(resp)
         } else {
           reject(resp.data)
         }

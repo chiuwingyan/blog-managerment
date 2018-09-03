@@ -16,7 +16,7 @@
     </el-select>
     <el-select v-model="publish" clearable filterable placeholder="是否已发布">
       <el-option
-        key="true"
+        key="true" 
         label="是"
         :value="true">
       </el-option>
@@ -149,7 +149,6 @@
             message: '删除成功!'
           });
           if (resp.code===1) {
-            console.log('page',resp)
             this.page = 1;
             console.log(this)
             this.fetchList();

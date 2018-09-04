@@ -15,6 +15,11 @@
         label="评论内容">
       </el-table-column>
       <el-table-column
+        prop="reply"
+        label="状态">
+        <el-tag :style="reply?'success':'info'"/>
+      </el-table-column>
+      <el-table-column
         prop="createTime"
         label="日期"
         width="180">
@@ -30,7 +35,7 @@
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row.id,scope.row.commentId)" type="primary" plain size="small">回复
+          <el-button @click="showDialog(scope.row.commentId,scope.row.articleId)" type="primary" plain size="small">回复
           </el-button>
           <el-button type="danger" plain size="small" @click="deleted(scope.row.id)">禁用</el-button>
         </template>
@@ -52,8 +57,10 @@
 
     <el-dialog title="评论回复" :visible.sync="commentDialogVisible">
       <el-form :model="form">
-        <el-form-item label="活动名称" label-width="50%">
-          <el-input v-model="form.comment" aria-placeholder="请输入评论"></el-input>
+        <el-form-item>
+          <el-input v-model="form.comment" type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -66,12 +73,9 @@
 </template>
 
 <script>
-  import addCommentDialog from '@/components/add-comment-dialog'
 
   export default {
-    components: {
-      addCommentDialog
-    },
+    components: {},
     data() {
       return {
         /**
@@ -79,7 +83,18 @@
          */
         commentList: [],
         commentDialogVisible: false,
-        commentId: ''
+
+        /**
+         * 评论id
+         */
+        commentId: '',
+        /**
+         * 文章id
+         */
+        articleId: '',
+        form: {
+          comment: ''
+        }
       }
     }
     ,
@@ -102,9 +117,10 @@
         }
 
       },
-      showDialog(val) {
+      showDialog(val, articleId) {
         this.commentDialogVisible = true;
         this.commentId = val;
+        this.articleId = articleId;
       },
       /**
        * 提交评论
@@ -112,11 +128,21 @@
        */
       async commitComment() {
         let param = {
-          'parentId':this.commentId,
-
+          'parentId': this.commentId,
+          'articleId': this.articleId,
+          'comment': this.form.comment
         };
         const resp = this.$request().post('/comment/add', param);
-      }
+        if (resp.data.code === 1) {
+          this.commentDialogVisible = false;
+          this.getCommentList(1);
+        }
+        this.$message({
+          type: resp.data.code === 1 ? 'success' : 'error',
+          message: resp.data.msg
+        })
+      },
+
     }
   }
 </script>

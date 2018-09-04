@@ -33,11 +33,7 @@
       this.fetchTagList();
 
     },
-    props: {
-      myTags: {
-        type: Array
-      }
-    },
+    props: ['myTags'],
     data() {
       return {
         selectedTag: this.myTags,
@@ -51,6 +47,9 @@
       selectedTag: function () {
 
         this.$emit('selectTagChange', this.selectedTag)
+      },
+      myTags:function () {
+        this.selectedTag = this.myTags
       }
     },
     computed: {

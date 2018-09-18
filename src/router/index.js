@@ -167,6 +167,9 @@ export const routerList = [
           name: '设置',
           isShow: true
         },
+        redirect: {
+          name: '社交信息'
+          },
         component: middle,
         icon: 'el-icon-setting',
         children: [

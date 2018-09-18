@@ -6,7 +6,7 @@ import router from '@/router';
 
 axios.defaults.timeout = 10000;
 // axios.defaults.baseURL = 'http://localhost:8181/';
-axios.defaults.baseURL = 'http://39.108.174.244:8181/';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development'?'/api':'';
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
 }
@@ -32,7 +32,9 @@ axios.interceptors.response.use(function (response) {
         console.log('未授权，请重新登录')
         router.push({name: 'login'});
         break;
-
+      case 400:
+        Message.error(error.response.data.msg);
+      break;
       default:
         break;
     }

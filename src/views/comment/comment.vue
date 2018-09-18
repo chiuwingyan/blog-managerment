@@ -8,7 +8,7 @@
       <el-table-column
         prop="articleTitle"
         label="文章"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="comment"
@@ -17,7 +17,9 @@
       <el-table-column
         prop="reply"
         label="状态">
-        <el-tag :style="reply?'success':'info'"/>
+        <template slot-scope="scope">
+        <el-tag :type="scope.row.reply?'success':'danger'">{{scope.row.reply?'已回复':'未回复'}}</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createTime"

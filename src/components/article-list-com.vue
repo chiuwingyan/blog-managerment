@@ -26,7 +26,7 @@
         :value="false">
       </el-option>
     </el-select>
-    <el-button type="primary" icon="el-icon-search">搜索</el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
     <el-table
       :data="list.data"
       border
@@ -107,12 +107,12 @@
       this.fetchCategory();
     },
     methods: {
-      async fetchList(page) {
+      async fetchList(page,params) {
         if(page)
         this.page=page;
 
-        let resp = await this.$request().get(`article/list?page=${page || this.page}`);
-        this.list = resp.data.data;
+        let resp = await this.$request().get(`article/list?page=${page || this.page}`,params);
+        this.list = Object.freeze(resp.data.data);
       },
       /**
        * 获取分类
@@ -153,8 +153,21 @@
             console.log(this)
             this.fetchList();
           }
+      },
+      search(){
+        let params;
+        if(this.categoryTitile !== '' || this.categoryId !== '' || this.publish !== null){
+            
+         params = {
+              "articleTitle":this.categoryTitile,
+              "categoryId":this.categoryId,
+              "publish":this.publish,
+        };
+       
       }
+       this.fetchList(1,params);
     }
+  }
   }
 </script>
 

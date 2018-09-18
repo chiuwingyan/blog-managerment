@@ -29,7 +29,8 @@
     </section>
     <section class="btn">
       <el-button type="primary" class="comfirm" @click="release">发布文章</el-button>
-      <el-button type="primary" plain @click="save">保存修改</el-button>
+      <el-button type="primary" plain @click="save" v-if="!publish">保存修改</el-button>
+     <el-button v-if="$route.params.id" @click="back">返回</el-button>
     </section>
   </div>
 
@@ -60,7 +61,9 @@
         tagList: [],
         selectedTag: [],
         tags: [],
-        openComment: true
+        openComment: true,
+        publish:false,
+        articleId:null
 
       }
     },
@@ -79,6 +82,10 @@
           // $vm.$img2Url 详情见本页末尾
           $vm.$img2Url(pos, url);
         })
+        // resp = await this.$request().post('file/upload',params);
+        // let params = {
+        //   "data":
+        // }
       },
       //获取分类目录
       async fetchCategoryList() {
@@ -89,12 +96,15 @@
       //获取文章详情
       async fetchActicleDetail(id) {
         const resp = await this.$request().get(`article/info/${id}`);
-        this.title = resp.data.data.articleTitle;
+        this.title = resp.data.data.mainTitle;
         this.content = resp.data.data.content;
         this.category = resp.data.data.categoryId;
         this.shortDesc = resp.data.data.shortDesc;
         this.openComment = resp.data.data.publish;
         this.selectedTag = resp.data.data.tagIds;
+        this.articleId = resp.data.data.articleId;
+      //  debugger;
+        this.publish = resp.data.data.publish;
       },
       //当选择的标签发生改变时，子组件的回调
       selectTagChange(newArr) {
@@ -110,13 +120,22 @@
         let params = {
           "categoryId": this.category,
           "content": this.content,
-          "articleTitle": this.title,
+          "mainTitle": this.title,
           "openComment": this.openComment,
           "shortDesc": this.shortDesc,
-          "tags": this.selectedTag,
-          "publish": true
+          "tagIds": this.selectedTag,
+          "publish": true,
+
         };
-        const resp = await this.$request().post('article/add', params)
+       // const resp = await this.$request().post('article/add', params)
+         let resp;
+        if(this.$route.params.id){
+            let idParams = { "articleId":this.articleId }
+            Object.assign(params,idParams)
+            resp = await this.$request().put('article/update',params)
+          }else{
+            resp = await this.$request().post('article/add',params)
+          }
         if (resp.data.code === 1) {
           this.$message({
             message: '发布成功',
@@ -133,13 +152,21 @@
         let params = {
           "categoryId": this.category,
           "content": this.content,
-          "articleTitle": this.title,
+          "mainTitle": this.title,
           "openComment": this.openComment,
           "shortDesc": this.shortDesc,
-          "tags": this.selectedTag,
+          "tagIds": this.selectedTag,
           "publish": false
         };
-        const resp = await this.$request().post('article/add', params)
+       // const resp = await this.$request().post('article/add', params)
+        let resp;
+          if(this.$route.params.id){
+            let idParams = { "articleId":this.articleId }
+            Object.assign(params,idParams)
+            resp = await this.$request().put('/article/update',params)
+          }else{
+            resp = await this.$request().post('/article/add',params)
+          }
         if (resp.data.code === 1) {
           this.$message({
             message: '保存成功',
@@ -150,8 +177,10 @@
         } else {
           this.$message.error('保存失败，请重试');
         }
-      }
-
+      },
+        back(){
+          this.$router.go(-1)
+        }
     },
     computed: {}
   }

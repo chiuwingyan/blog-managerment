@@ -63,7 +63,7 @@
           this.page = page
         }
         const resp = await this.$request().get(`/tag/list?page=${page || this.page}`);
-        this.list = resp.data.data;
+        this.list = Object.freeze(resp.data.data);
       },
       //新增
       addOrUpdateDialog(id, initVal) {
